@@ -4,7 +4,7 @@ public class Cliente
 {
 
 	[Required]
-	public int Id { get; set; }
+	public int ID_Cliente { get; set; }
 
 	[Required]
 	[MaxLength(50)]
@@ -29,6 +29,5 @@ public class Cliente
 	[Required]
 	public DateTime DataNascimento { get; set; }
 
-	public List<Marketing> Marketing { get; } = new();
 
 }

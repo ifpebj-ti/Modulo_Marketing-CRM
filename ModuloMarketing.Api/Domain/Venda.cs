@@ -4,10 +4,10 @@ public class Venda
 {
 
 	[Required]
-	public int Id { get; set; }
+	public int ID_Venda { get; set; }
 
 	[Required]
-	public DateTime Data { get; set; }
+	public DateTime DataHoraVenda { get; set; }
 
 	public Cliente Cliente { get; set; }
 

@@ -4,11 +4,12 @@ public class Produto
 {
 
 	[Required]
-	public int Id { get; set; }
+	[Key]
+	public int ID_Produto { get; set; }
 	
 	[Required]
 	[MaxLength(100)]
-	public string Nome { get; set; }
+	public string NomeProduto { get; set; }
 	
 	[Required]
 	[MaxLength(255)]
@@ -19,10 +20,10 @@ public class Produto
 	public string Categoria { get; set; }
 	
 	[Required]
-	public double Preco { get; set; }
+	public decimal PrecoVenda { get; set; }
 	
 	[Required]
-	public int Quantidade { get; set; }
+	public int QuantidadeEstoque { get; set; }
 	
 	[Required]
 	public DateTime DataValidade { get; set; }
