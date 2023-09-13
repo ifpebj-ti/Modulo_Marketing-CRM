@@ -19,5 +19,7 @@ namespace ModuloMarketing.Api.Repository
 
         public DbSet<Produto> Produto { get; set; }
         public DbSet<ProdutosEmPromocao> ProdutosEmPromocao { get; set; }
+        public DbSet<Marketing> Marketing { get; set; }
+        public DbSet<ResultadoMarketing> ResultadoMarketing { get; set; }
     }
 }
