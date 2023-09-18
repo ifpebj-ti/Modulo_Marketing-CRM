@@ -4,9 +4,9 @@ public class MarketingTest
 {
 
     public Marketing marketing {get; set; } = new Marketing{
-        Nome = "Marketing name",
+        Nome_Marketing = "Marketing name",
         Descricao = "Test description",
-        Canais = "Whatsapp, Instagram",
+        Email_Criador = "Test@test.com",
         DataInicio = DateTime.Now,
         DataTermino = DateTime.Now
     };
@@ -14,7 +14,7 @@ public class MarketingTest
     [Fact]
     public void TestHasAll()
     {
-        Assert.Equal("Marketing name", marketing.Nome);
+        Assert.Equal("Marketing name", marketing.Nome_Marketing);
         var validationContext = new ValidationContext(marketing);
         var validationResults = new List<ValidationResult>();
         bool isValid = Validator.TryValidateObject(marketing, validationContext, validationResults, true);
@@ -24,12 +24,12 @@ public class MarketingTest
     [Fact]
     public void MarketingSemNome()
     {
-        marketing.Nome = "";
+        marketing.Nome_Marketing = "";
         var validationContext = new ValidationContext(marketing);
         var validationResults = new List<ValidationResult>();
         bool isValid = Validator.TryValidateObject(marketing, validationContext, validationResults, true);
         Assert.False(isValid);
-        Assert.Equal("The Nome field is required.", validationResults[0].ErrorMessage);
+        Assert.Equal("The Nome_Marketing field is required.", validationResults[0].ErrorMessage);
     }
 
     [Fact]
@@ -44,14 +44,14 @@ public class MarketingTest
     }
 
     [Fact]
-    public void MarketingSemCanais()
+    public void MarketingSemEmailCriador()
     {
-        marketing.Canais = "";
+        marketing.Email_Criador = "";
         var validationContext = new ValidationContext(marketing);
         var validationResults = new List<ValidationResult>();
         bool isValid = Validator.TryValidateObject(marketing, validationContext, validationResults, true);
         Assert.False(isValid);
-        Assert.Equal("The Canais field is required.", validationResults[0].ErrorMessage);
+        Assert.Equal("The Email_Criador field is required.", validationResults[0].ErrorMessage);
     }
 
 }

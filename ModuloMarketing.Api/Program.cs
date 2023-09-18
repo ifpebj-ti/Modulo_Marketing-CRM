@@ -6,11 +6,13 @@ using ModuloMarketing.Api.Repository.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 //insira a string connection
-builder.Services.AddDbContext<DbContexto>(options => options.UseSqlServer(""));
+builder.Services.AddDbContext<DbContexto>(options =>
+	options.UseNpgsql(builder.Configuration["ConnectionString"])
+);
 
 builder.Services.AddControllers();
 
-//Adicionar injeções dos repositories
+//Adicionar injeï¿½ï¿½es dos repositories
 builder.Services.AddScoped<IProdutosEmPromocaoRepository, ProdutosEmPromocaoRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
