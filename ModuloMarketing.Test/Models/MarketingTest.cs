@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 public class MarketingTest
 {
 
-    public Marketing marketing {get; set; } = new Marketing{
+    public Campanha marketing {get; set; } = new Campanha{
         Nome_Marketing = "Marketing name",
         Descricao = "Test description",
         Email_Criador = "Test@test.com",
-        DataInicio = DateTime.Now,
-        DataTermino = DateTime.Now
+        Data_Inicio = DateTime.Now,
+        Data_Termino = DateTime.Now
     };
 
     [Fact]
