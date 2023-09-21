@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-public class ResultadoMarketing
+public class ResultadoCampanha
 {
 
     [Required]
@@ -8,7 +8,7 @@ public class ResultadoMarketing
     public int Id_Resultado { get; set; }
 
     [Required]
-    public int Id_Marketing { get; set; }
+    public int Id_Campanha { get; set; }
 
     [Required]
     public int Alcance { get; set; }
