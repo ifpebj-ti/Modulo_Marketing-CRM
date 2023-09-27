@@ -17,10 +17,7 @@ namespace ModuloMarketing.Api.Repository
         }
 
 
-        public DbSet<Produto> Produto { get; set; }
-        public DbSet<ProdutosEmPromocao> ProdutosEmPromocao { get; set; }
-        public DbSet<Campanha> Marketing { get; set; }
-        public DbSet<ResultadoCampanha> ResultadoMarketing { get; set; }
+        public DbSet<Campanha> Campanha { get; set; }
         public DbSet<Canal> Canal { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<HistoricoCampanhas> HistoricoCampanhas { get; set; }

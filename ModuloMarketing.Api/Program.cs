@@ -13,7 +13,6 @@ builder.Services.AddDbContext<DbContexto>(options =>
 builder.Services.AddControllers();
 
 //Adicionar inje��es dos repositories
-builder.Services.AddScoped<IProdutosEmPromocaoRepository, ProdutosEmPromocaoRepository>();
 builder.Services.AddScoped<ICampanhaRepository, CampanhaRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
