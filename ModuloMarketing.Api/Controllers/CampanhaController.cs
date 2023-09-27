@@ -33,6 +33,7 @@ public class CampanhaController : ControllerBase
     {
         try 
         {
+            _logger.LogWarning("Buscando campanha por id");
             Campanha campanha = await _campanhaRepository.GetCampanhaPorId(id);
             if (campanha == null) return NotFound();
             return Ok(campanha);
