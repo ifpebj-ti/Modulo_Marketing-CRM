@@ -2,5 +2,6 @@
 {
     public interface ICampanhaRepository 
     {
+        List<Campanha> GetTodasASCampanhas();
     }
 }
