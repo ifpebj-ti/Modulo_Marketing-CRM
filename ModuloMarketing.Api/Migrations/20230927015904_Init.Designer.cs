@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ModuloMarketing.Api.Migrations
 {
     [DbContext(typeof(DbContexto))]
-    [Migration("20230920003154_secondMigration")]
-    partial class secondMigration
+    [Migration("20230927015904_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,9 @@ namespace ModuloMarketing.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id_Marketing"));
 
+                    b.Property<int>("Alcance")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("Data_Inicio")
                         .HasColumnType("timestamp with time zone");
 
@@ -52,13 +55,14 @@ namespace ModuloMarketing.Api.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("Id_Resultado")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Nome_Marketing")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Observacao")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("Possui_Disparo_Mensagem")
                         .HasColumnType("boolean");
@@ -71,8 +75,6 @@ namespace ModuloMarketing.Api.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id_Marketing");
-
-                    b.HasIndex("Id_Resultado");
 
                     b.ToTable("Marketing");
                 });
@@ -138,120 +140,6 @@ namespace ModuloMarketing.Api.Migrations
                     b.HasKey("Id_Historico_Campanha");
 
                     b.ToTable("HistoricoCampanhas");
-                });
-
-            modelBuilder.Entity("ModuloMarketing.Api.Domain.ProdutosEmPromocao", b =>
-                {
-                    b.Property<int>("ID_Promocao")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID_Promocao"));
-
-                    b.Property<DateTime>("DataFim")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DataInicio")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("Desconto")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("ID_Produto")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ID_Promocao");
-
-                    b.HasIndex("ID_Produto");
-
-                    b.ToTable("ProdutosEmPromocao");
-                });
-
-            modelBuilder.Entity("Produto", b =>
-                {
-                    b.Property<int>("ID_Produto")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID_Produto"));
-
-                    b.Property<string>("Categoria")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime>("DataValidade")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("Fornecedor")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("NomeProduto")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<decimal>("PrecoVenda")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("QuantidadeEstoque")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ID_Produto");
-
-                    b.ToTable("Produto");
-                });
-
-            modelBuilder.Entity("ResultadoCampanha", b =>
-                {
-                    b.Property<int>("Id_Resultado")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id_Resultado"));
-
-                    b.Property<int>("Alcance")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Id_Campanha")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Observacao")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id_Resultado");
-
-                    b.ToTable("ResultadoMarketing");
-                });
-
-            modelBuilder.Entity("Campanha", b =>
-                {
-                    b.HasOne("ResultadoCampanha", "Resultado_Campanha")
-                        .WithMany()
-                        .HasForeignKey("Id_Resultado")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Resultado_Campanha");
-                });
-
-            modelBuilder.Entity("ModuloMarketing.Api.Domain.ProdutosEmPromocao", b =>
-                {
-                    b.HasOne("Produto", "Produto")
-                        .WithMany()
-                        .HasForeignKey("ID_Produto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Produto");
                 });
 #pragma warning restore 612, 618
         }

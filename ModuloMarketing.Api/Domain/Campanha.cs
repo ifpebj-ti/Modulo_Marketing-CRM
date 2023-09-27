@@ -7,14 +7,11 @@ public class Campanha
 
 	[Required]
 	[Key]
-	public int Id_Marketing { get; set; }
-
-	[Required]
-	public int Id_Resultado { get; set; }
+	public int Id_Campanha { get; set; }
 	
 	[Required]
 	[MaxLength(50)]
-	public string Nome_Marketing { get; set; }
+	public string Nome_Campanha { get; set; }
 
 	[Required]
 	[MaxLength(50)]
@@ -38,10 +35,12 @@ public class Campanha
 
     public string mensagem { get; set; }
 
-    [ForeignKey("Id_Resultado")]
-    public virtual ResultadoCampanha Resultado_Campanha { get; set; }
+    [Required]
+    public int Alcance { get; set; }
 
-    //public List<ProdutosEmPromocao> Produtos_Em_Promoção { get; set; }
+    public string Observacao { get; set; }
+
+    //public List<ProdutosEmPromocao> Produtos_Em_Promoï¿½ï¿½o { get; set; }
     //public List<Filiais> Filiais_Da_Campanha { get; set; }
     //public List<Canal> Canais_De_Reproducao { get; set; }
 

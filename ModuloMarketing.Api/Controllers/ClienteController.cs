@@ -11,18 +11,10 @@ public class ClienteController : ControllerBase
 {
     
     private readonly ILogger<ClienteController> _logger;
-    private readonly IProdutosEmPromocaoRepository _produtosEmPromocaoRepository;
 
-    public ClienteController(ILogger<ClienteController> logger, IProdutosEmPromocaoRepository produtosEmPromocaoRepository)
+    public ClienteController(ILogger<ClienteController> logger)
     {
         _logger = logger;
-        _produtosEmPromocaoRepository = produtosEmPromocaoRepository;
-    }
-
-    [HttpGet(Name = "GetProdutosEmPromocao")]
-    public List<ProdutosEmPromocao> Get()
-    {
-        return _produtosEmPromocaoRepository.GetTodosOsProdutosEmPromocao();
     }
 
 }

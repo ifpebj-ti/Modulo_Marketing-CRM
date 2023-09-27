@@ -2,6 +2,8 @@
 {
     public interface ICampanhaRepository 
     {
-        List<Campanha> GetTodasASCampanhas();
+        Task<List<Campanha>> GetTodasASCampanhas();
+        Task<Campanha> GetCampanhaPorId(int id);
+        Task<Campanha> SalvarCampanha(CampanhaRequest request);
     }
 }
