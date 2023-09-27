@@ -2,8 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using ModuloMarketing.Api.Repository;
 using ModuloMarketing.Api.Repository.Implementation;
 using ModuloMarketing.Api.Repository.Interfaces;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+var logger = new LoggerConfiguration()
+  .ReadFrom.Configuration(builder.Configuration)
+  .Enrich.FromLogContext()
+  .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 //insira a string connection
 builder.Services.AddDbContext<DbContexto>(options =>
