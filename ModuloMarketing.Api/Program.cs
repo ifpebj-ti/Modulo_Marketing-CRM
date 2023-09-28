@@ -21,6 +21,8 @@ builder.Services.AddControllers();
 
 //Adicionar inje��es dos repositories
 builder.Services.AddScoped<ICampanhaRepository, CampanhaRepository>();
+builder.Services.AddScoped<IHistoricoCampanhasRepository, HistoricoCampanhasRepository>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
