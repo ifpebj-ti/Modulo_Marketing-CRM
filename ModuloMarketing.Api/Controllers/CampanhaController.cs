@@ -26,6 +26,13 @@ public class CampanhaController : ControllerBase
         return Ok(campanhas);
     }
 
+    [HttpGet(Name = "GetCampanhasAtivas")]
+    public async Task<IActionResult> GetCampanhasAtiva()
+    {
+        _logger.LogWarning("Buscando campanhas ativas");
+        List<Campanha> campanhasAtivas = await _campanhaRepository.GetCampanhasAtivas();
+        return Ok(campanhasAtivas);
+    }
 
     [HttpGet]
     [Route("CampanhaPorId/{id}")]

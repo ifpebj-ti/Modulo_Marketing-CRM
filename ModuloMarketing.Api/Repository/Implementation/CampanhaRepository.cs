@@ -19,7 +19,13 @@ namespace ModuloMarketing.Api.Repository.Implementation
             List<Campanha> campanhas = await this.Contexto.Campanha.ToListAsync();
             return campanhas;
         }
+        public async Task<List<Campanha>> GetCampanhasAtivas()
+        {
+            List<Campanha> campanhasAtivas = await this.Contexto.Campanha.Where(campanha => campanha.Status == true).ToListAsync();
+            return campanhasAtivas;
 
+        }
+        
         public async Task<Campanha> GetCampanhaPorId(int id)
         {
             Campanha campanha = await this.Contexto.Campanha.FirstOrDefaultAsync(m => m.Id_Campanha == id);
