@@ -8,7 +8,7 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish ModuloMarketing.Api/ModuloMarketing.Api.csproj -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine3.18-arm64v8
 WORKDIR /app
 COPY --from=build-env /app/out .
 
