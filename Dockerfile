@@ -1,17 +1,21 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0-bookworm-slim-arm64v8 AS build-env
+# Use the appropriate base image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-bookworm-slim-arm64v8 AS build-env
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y git dotnet-sdk-6.0 aspnetcore-runtime-6.0 zlib1g && \
-    rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-RUN git clone https://github.com/ifpebj-ti/Modulo_Marketing-CRM.git
+COPY *.sln ./
 
-WORKDIR /Modulo_Marketing-CRM/ModuloMarketing.Api
+RUN mkdir aspnetapp
+COPY ModuloMarketing.Api/*.csproj ./aspnetapp/
 
-RUN dotnet publish -c Release
+RUN dotnet restore
 
-WORKDIR ./bin/Release/net6.0/publish
+COPY ModuloMarketing.Api/. ./aspnetapp/
 
-ENTRYPOINT ["dotnet", "ModuloMarketing.Api.dll"]
+WORKDIR /app/aspnetapp
 
+RUN dotnet publish -c release -o /app --no-restore
+
+COPY --from=build-env /app ./
+
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
