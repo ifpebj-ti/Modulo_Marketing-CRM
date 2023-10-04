@@ -58,7 +58,7 @@ public class CampanhaController : ControllerBase
     [Route("CampanhaPorId/{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        _logger.LogWarning("Buscando campanha por id");
+        _logger.LogWarning(string.Format("Buscando campanha por id {0}", id));
         if (!ModelState.IsValid) return BadRequest(ModelState);
         try
         {
@@ -94,5 +94,28 @@ public class CampanhaController : ControllerBase
         }
 
     }
+
+    [HttpPost]
+    [Route("DesativarCampanha/{id}")]
+    public async Task<IActionResult> DesativarCampanha([FromRoute] int id)
+    {
+
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        _logger.LogWarning(string.Format("Desativando campanha com id {0}", id));
+        try
+        {
+            await _campanhaRepository.DesativarCampanha(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex.Message);
+            return BadRequest();
+        }
+
+    }
+
+
 
 }
