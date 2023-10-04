@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:6.0.414-bookworm-slim-arm64v8 AS build-env
 
 WORKDIR /app
 
