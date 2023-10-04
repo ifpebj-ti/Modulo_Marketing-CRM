@@ -1,21 +1,16 @@
-# Use the appropriate base image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0-bookworm-slim-arm64v8 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:6.0.414-alpine3.18-arm64v8 AS build-env
 
 WORKDIR /app
 
-COPY *.sln ./
-
-RUN mkdir aspnetapp
-COPY ModuloMarketing.Api/*.csproj ./aspnetapp/
-
+COPY ModuloMarketing.Api/*.csproj ./
 RUN dotnet restore
 
-COPY ModuloMarketing.Api/. ./aspnetapp/
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-WORKDIR /app/aspnetapp
+FROM mcr.microsoft.com/dotnet/aspnet:6.0.414-alpine3.18-arm64v8
+WORKDIR /app
+COPY --from=build-env /app/out .
 
-RUN dotnet publish -c release -o /app --no-restore
 
-COPY --from=build-env /app ./
-
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+ENTRYPOINT ["dotnet", "ModuloMarketing.Api.dll"]
