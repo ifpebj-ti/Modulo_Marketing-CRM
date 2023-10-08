@@ -14,14 +14,29 @@ namespace ModuloMarketing.Api.Repository.Implementation
             Contexto = contexto;
         }
 
-        public async Task<List<Campanha>> GetTodasASCampanhas()
+        public async Task<List<Campanha>> GetTodasASCampanhas(int pageNumber, int itemNumber)
         {
-            List<Campanha> campanhas = await this.Contexto.Campanha.ToListAsync();
+            int skip = (pageNumber - 1) * itemNumber;
+            int take = itemNumber;
+
+            List<Campanha> campanhas = await this.Contexto.Campanha
+                .OrderBy(Data_Inicio => Data_Inicio.Data_Inicio)
+                .Skip(skip) 
+                .Take(take) 
+                .ToListAsync();
             return campanhas;
         }
-        public async Task<List<Campanha>> GetCampanhasAtivas()
+        public async Task<List<Campanha>> GetCampanhasAtivas(int pageNumber, int itemNumber)
         {
-            List<Campanha> campanhasAtivas = await this.Contexto.Campanha.Where(campanha => campanha.Status == true).ToListAsync();
+            int skip = (pageNumber - 1) * itemNumber;
+            int take = itemNumber;
+
+            List<Campanha> campanhasAtivas = await this.Contexto.Campanha
+                .OrderBy(Data_Inicio => Data_Inicio.Data_Inicio)
+                .Where(campanha => campanha.Status == true)
+                .Skip(skip) 
+                .Take(take) 
+                .ToListAsync();
             return campanhasAtivas;
 
         }
@@ -41,7 +56,7 @@ namespace ModuloMarketing.Api.Repository.Implementation
                 Email_Criador = request.Email_Criador,
                 Descricao = request.Descricao,
                 Data_Inicio = request.Data_Inicio,
-                Status = false,
+                Status = true,
                 Data_Termino = request.Data_Termino,
                 Possui_Disparo_Mensagem = false,
                 mensagem = request.Mensagem,

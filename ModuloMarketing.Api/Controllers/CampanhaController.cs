@@ -20,30 +20,47 @@ public class CampanhaController : ControllerBase
     }
 
     [HttpGet(Name = "GetCampanhas")]
-    public async Task<IActionResult> Get()
+    [Route("campanhas")]
+    public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int itemNumber = 10)
     {
-        List<Campanha> campanhas = await _campanhaRepository.GetTodasASCampanhas();
-        return Ok(campanhas);
+        try{
+            _logger.LogWarning("Buscando campanhas...");
+            List<Campanha> campanhas = await _campanhaRepository.GetTodasASCampanhas(pageNumber, itemNumber);
+            return Ok(campanhas);
+        }catch(Exception ex)
+        {
+            return BadRequest();
+        }
+
     }
 
     [HttpGet(Name = "GetCampanhasAtivas")]
-    public async Task<IActionResult> GetCampanhasAtiva()
+    [Route("campanhasAtivas")]
+    public async Task<IActionResult> GetCampanhasAtivas([FromQuery] int pageNumber = 1, [FromQuery] int itemNumber = 10)
     {
-        _logger.LogWarning("Buscando campanhas ativas");
-        List<Campanha> campanhasAtivas = await _campanhaRepository.GetCampanhasAtivas();
-        return Ok(campanhasAtivas);
+        try
+        {
+            _logger.LogWarning("Buscando campanhas ativas...");
+            List<Campanha> campanhasAtivas = await _campanhaRepository.GetCampanhasAtivas(pageNumber, itemNumber);
+            return Ok(campanhasAtivas);
+        } catch(Exception ex)
+        {
+            return BadRequest();
+        }
+        
     }
 
-    [HttpGet]
-    [Route("CampanhaPorId/{id}")]
+    [HttpGet(Name = "GetCampanhasPorId")]
+    [Route("campanhaPorId/{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
         try 
         {
-            _logger.LogWarning("Buscando campanha por id");
+            _logger.LogWarning("Buscando campanha por id...");
             Campanha campanha = await _campanhaRepository.GetCampanhaPorId(id);
             if (campanha == null) return NotFound();
             return Ok(campanha);
+
         } catch(Exception ex)
         { 
             return BadRequest();
@@ -53,11 +70,19 @@ public class CampanhaController : ControllerBase
 
 
     [HttpPost(Name = "PostCampanhas")]
+    [Route("campanha")]
     public async Task<IActionResult> Post([FromBody] CampanhaRequest request)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
-        Campanha campanha = await _campanhaRepository.SalvarCampanha(request);
-        return CreatedAtAction(nameof(GetById), new { id = campanha.Id_Campanha }, campanha);
+        try
+        {
+            _logger.LogWarning("Criando campanha...");
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            Campanha campanha = await _campanhaRepository.SalvarCampanha(request);
+            return CreatedAtAction(nameof(GetById), new { id = campanha.Id_Campanha }, campanha);
+        } catch(Exception ex)
+        {
+            return BadRequest();
+        }
     }
 
 
