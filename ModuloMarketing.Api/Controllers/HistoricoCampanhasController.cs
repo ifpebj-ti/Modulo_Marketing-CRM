@@ -26,27 +26,39 @@ public class HistoricoCampanhasController : ControllerBase
     [HttpGet(Name = "GetHistorico")]
     public async Task<IActionResult> Get()
     {
-        List<HistoricoCampanhas> historico = await _historicoCampanhasRepository.GetHistorico();
-        return Ok(historico);
-    }
-
-
-[HttpGet]
-    [Route("HistoricoPorId/{id}")]
-    public async Task<IActionResult> GetById([FromRoute]  int id)
-    {
-        try 
+        _logger.LogWarning("Buscando todos os historicos de campanha");
+        try
         {
-            _logger.LogWarning("Buscando histórico por id");
-            HistoricoCampanhas historico = await _historicoCampanhasRepository.GetHistoricoPorId(id);
-            if (historico == null) return NotFound();
+            List<HistoricoCampanhas> historico = await _historicoCampanhasRepository.GetHistorico();
             return Ok(historico);
-        } catch(Exception ex)
-        { 
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex.Message);
             return BadRequest();
         }
 
     }
 
-    
+
+    [HttpGet]
+    [Route("HistoricoPorId/{id}")]
+    public async Task<IActionResult> GetById([FromRoute] int id)
+    {
+        _logger.LogWarning("Buscando histórico por id");
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        try
+        {
+            HistoricoCampanhas historico = await _historicoCampanhasRepository.GetHistoricoPorId(id);
+            if (historico == null) return NotFound();
+            return Ok(historico);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest();
+        }
+
+    }
+
+
 }
