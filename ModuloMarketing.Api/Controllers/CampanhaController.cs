@@ -9,7 +9,7 @@ namespace ModuloMarketing.Api.Controllers;
 [Route("[controller]")]
 public class CampanhaController : ControllerBase
 {
-    
+
     private readonly ILogger<CampanhaController> _logger;
     private readonly ICampanhaRepository _campanhaRepository;
 
@@ -23,46 +23,52 @@ public class CampanhaController : ControllerBase
     [Route("campanhas")]
     public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int itemNumber = 10)
     {
-        try{
-            _logger.LogWarning("Buscando campanhas...");
-            List<Campanha> campanhas = await _campanhaRepository.GetTodasASCampanhas(pageNumber, itemNumber);
-            return Ok(campanhas);
-        }catch(Exception ex)
+        _logger.LogWarning("Buscando todas as campanhas");
+        try
         {
+            List<Campanha> campanhas = await _campanhaRepository.GetTodasASCampanhas();
+            return Ok(campanhas);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex.Message);
             return BadRequest();
         }
 
     }
 
-    [HttpGet(Name = "GetCampanhasAtivas")]
-    [Route("campanhasAtivas")]
-    public async Task<IActionResult> GetCampanhasAtivas([FromQuery] int pageNumber = 1, [FromQuery] int itemNumber = 10)
+    [HttpGet]
+    [Route("GetCampanhasAtivas")]
+    public async Task<IActionResult> GetCampanhasAtivas()
     {
         try
         {
-            _logger.LogWarning("Buscando campanhas ativas...");
-            List<Campanha> campanhasAtivas = await _campanhaRepository.GetCampanhasAtivas(pageNumber, itemNumber);
+            _logger.LogWarning("Buscando campanhas ativas");
+            List<Campanha> campanhasAtivas = await _campanhaRepository.GetCampanhasAtivas();
             return Ok(campanhasAtivas);
-        } catch(Exception ex)
+        }
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex.Message);
             return BadRequest();
         }
-        
     }
 
     [HttpGet(Name = "GetCampanhasPorId")]
     [Route("campanhaPorId/{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        try 
+        _logger.LogWarning(string.Format("Buscando campanha por id {0}", id));
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        try
         {
-            _logger.LogWarning("Buscando campanha por id...");
             Campanha campanha = await _campanhaRepository.GetCampanhaPorId(id);
             if (campanha == null) return NotFound();
             return Ok(campanha);
-
-        } catch(Exception ex)
-        { 
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex.Message);
             return BadRequest();
         }
 
@@ -73,18 +79,41 @@ public class CampanhaController : ControllerBase
     [Route("campanha")]
     public async Task<IActionResult> Post([FromBody] CampanhaRequest request)
     {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        _logger.LogWarning("Criando Campanha");
         try
         {
-            _logger.LogWarning("Criando campanha...");
-            if (!ModelState.IsValid) return BadRequest(ModelState);
             Campanha campanha = await _campanhaRepository.SalvarCampanha(request);
             return CreatedAtAction(nameof(GetById), new { id = campanha.Id_Campanha }, campanha);
-        } catch(Exception ex)
+        }
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex.Message);
             return BadRequest();
         }
+
     }
 
+    [HttpPost]
+    [Route("DesativarCampanha/{id}")]
+    public async Task<IActionResult> DesativarCampanha([FromRoute] int id)
+    {
 
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        _logger.LogWarning(string.Format("Desativando campanha com id {0}", id));
+        try
+        {
+            await _campanhaRepository.DesativarCampanha(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex.Message);
+            return BadRequest();
+        }
+
+    }
 
 }
