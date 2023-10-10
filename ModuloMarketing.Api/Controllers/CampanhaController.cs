@@ -19,8 +19,8 @@ public class CampanhaController : ControllerBase
         _campanhaRepository = campanhaRepository;
     }
 
-    [HttpGet(Name = "GetCampanhas")]
-    [Route("campanhas")]
+    [HttpGet]
+    [Route("GetCampanhas")]
     public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int itemNumber = 10)
     {
         _logger.LogWarning("Buscando todas as campanhas");
@@ -54,8 +54,8 @@ public class CampanhaController : ControllerBase
         }
     }
 
-    [HttpGet(Name = "GetCampanhasPorId")]
-    [Route("campanhaPorId/{id}")]
+    [HttpGet]
+    [Route("GetCampanhaPorId/{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
         _logger.LogWarning(string.Format("Buscando campanha por id {0}", id));
@@ -75,8 +75,8 @@ public class CampanhaController : ControllerBase
     }
 
 
-    [HttpPost(Name = "PostCampanhas")]
-    [Route("campanha")]
+    [HttpPost]
+    [Route("CadastrarCampanha")]
     public async Task<IActionResult> Post([FromBody] CampanhaRequest request)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
