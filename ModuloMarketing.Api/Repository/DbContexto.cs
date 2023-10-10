@@ -21,6 +21,7 @@ namespace ModuloMarketing.Api.Repository
         public DbSet<Canal> Canal { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<HistoricoCampanhas> HistoricoCampanhas { get; set; }
+        public DbSet<DataComemorativa> DataComemorativa { get; set; }
 
     }
 }
