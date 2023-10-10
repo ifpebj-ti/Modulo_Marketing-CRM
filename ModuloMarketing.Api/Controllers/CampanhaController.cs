@@ -26,7 +26,7 @@ public class CampanhaController : ControllerBase
         _logger.LogWarning("Buscando todas as campanhas");
         try
         {
-            List<Campanha> campanhas = await _campanhaRepository.GetTodasASCampanhas();
+            List<Campanha> campanhas = await _campanhaRepository.GetTodasASCampanhas(pageNumber, itemNumber);
             return Ok(campanhas);
         }
         catch (Exception ex)
@@ -39,12 +39,12 @@ public class CampanhaController : ControllerBase
 
     [HttpGet]
     [Route("GetCampanhasAtivas")]
-    public async Task<IActionResult> GetCampanhasAtivas()
+    public async Task<IActionResult> GetCampanhasAtivas([FromQuery] int pageNumber = 1, [FromQuery] int itemNumber = 10)
     {
         try
         {
             _logger.LogWarning("Buscando campanhas ativas");
-            List<Campanha> campanhasAtivas = await _campanhaRepository.GetCampanhasAtivas();
+            List<Campanha> campanhasAtivas = await _campanhaRepository.GetCampanhasAtivas(pageNumber, itemNumber);
             return Ok(campanhasAtivas);
         }
         catch (Exception ex)
