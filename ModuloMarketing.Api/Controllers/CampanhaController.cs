@@ -6,7 +6,7 @@ using ModuloMarketing.Api.Repository.Interfaces;
 namespace ModuloMarketing.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class CampanhaController : ControllerBase
 {
 
