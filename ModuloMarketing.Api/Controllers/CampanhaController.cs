@@ -20,12 +20,13 @@ public class CampanhaController : ControllerBase
     }
 
     [HttpGet(Name = "GetCampanhas")]
-    public async Task<IActionResult> Get()
+    [Route("campanhas")]
+    public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int itemNumber = 10)
     {
         _logger.LogWarning("Buscando todas as campanhas");
         try
         {
-            List<Campanha> campanhas = await _campanhaRepository.GetTodasASCampanhas();
+            List<Campanha> campanhas = await _campanhaRepository.GetTodasASCampanhas(pageNumber, itemNumber);
             return Ok(campanhas);
         }
         catch (Exception ex)
@@ -38,12 +39,12 @@ public class CampanhaController : ControllerBase
 
     [HttpGet]
     [Route("GetCampanhasAtivas")]
-    public async Task<IActionResult> GetCampanhasAtivas()
+    public async Task<IActionResult> GetCampanhasAtivas([FromQuery] int pageNumber = 1, [FromQuery] int itemNumber = 10)
     {
         try
         {
             _logger.LogWarning("Buscando campanhas ativas");
-            List<Campanha> campanhasAtivas = await _campanhaRepository.GetCampanhasAtivas();
+            List<Campanha> campanhasAtivas = await _campanhaRepository.GetCampanhasAtivas(pageNumber, itemNumber);
             return Ok(campanhasAtivas);
         }
         catch (Exception ex)
@@ -51,11 +52,10 @@ public class CampanhaController : ControllerBase
             _logger.LogWarning(ex.Message);
             return BadRequest();
         }
-
     }
 
-    [HttpGet]
-    [Route("CampanhaPorId/{id}")]
+    [HttpGet(Name = "GetCampanhasPorId")]
+    [Route("campanhaPorId/{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
         _logger.LogWarning(string.Format("Buscando campanha por id {0}", id));
@@ -76,9 +76,9 @@ public class CampanhaController : ControllerBase
 
 
     [HttpPost(Name = "PostCampanhas")]
+    [Route("campanha")]
     public async Task<IActionResult> Post([FromBody] CampanhaRequest request)
     {
-
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         _logger.LogWarning("Criando Campanha");
@@ -115,7 +115,5 @@ public class CampanhaController : ControllerBase
         }
 
     }
-
-
 
 }
