@@ -23,7 +23,7 @@ public class HistoricoCampanhasController : ControllerBase
         _historicoCampanhasRepository = historicoCampanhasRepository;
     }
 
-    [HttpGet(Name = "GetHistorico")]
+    [HttpGet]
     public async Task<IActionResult> Get()
     {
         _logger.LogWarning("Buscando todos os historicos de campanha");
