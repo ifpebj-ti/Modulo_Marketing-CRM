@@ -12,10 +12,6 @@ public class HistoricoCampanhasController : ControllerBase
     private readonly ILogger<HistoricoCampanhasController> _logger;
 
     private readonly IHistoricoCampanhasRepository _historicoCampanhasRepository;
-    public HistoricoCampanhasController(ILogger<HistoricoCampanhasController> logger)
-    {
-        _logger = logger;
-    }
 
     public HistoricoCampanhasController(ILogger<HistoricoCampanhasController> logger, IHistoricoCampanhasRepository historicoCampanhasRepository)
     {
