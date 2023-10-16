@@ -26,6 +26,7 @@ namespace ModuloMarketing.Api.Repository.Implementation
                 .ToListAsync();
             return campanhas;
         }
+
         public async Task<List<Campanha>> GetCampanhasAtivas(int pageNumber, int itemNumber)
         {
             int skip = (pageNumber - 1) * itemNumber;
@@ -39,6 +40,13 @@ namespace ModuloMarketing.Api.Repository.Implementation
                 .ToListAsync();
             return campanhasAtivas;
 
+        }
+
+        public async Task<int> GetQuantidadeCampanhasAtivas()
+        {
+            int qntdCampanhas = await this.Contexto.Campanha.Where(campanha => campanha.Status == true).CountAsync();
+
+            return qntdCampanhas;
         }
         
         public async Task<Campanha> GetCampanhaPorId(int id)

@@ -73,6 +73,22 @@ public class CampanhaController : ControllerBase
         }
 
     }
+    [HttpGet]
+    [Route("GetQuantidadeCampanhasAtivas")]
+    public async Task<IActionResult> GetQntdCampanhasAtivas()
+    {
+        _logger.LogWarning("Buscando quantidade de campanhas ativas...");
+        try
+        {
+            int qntdCampanhas = await _campanhaRepository.GetQuantidadeCampanhasAtivas();
+            return Ok(new { quantidadeCampanhasAtivas = qntdCampanhas });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex.Message);
+            return BadRequest();
+        }
+    }
 
 
     [HttpPost]
