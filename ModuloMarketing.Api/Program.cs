@@ -4,6 +4,7 @@ using ModuloMarketing.Api.Repository.Implementation;
 using ModuloMarketing.Api.Repository.Interfaces;
 using Serilog;
 
+
 var builder = WebApplication.CreateBuilder(args);
 var logger = new LoggerConfiguration()
   .ReadFrom.Configuration(builder.Configuration)
@@ -12,9 +13,11 @@ var logger = new LoggerConfiguration()
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
+DotNetEnv.Env.Load();
+
 //insira a string connection
 builder.Services.AddDbContext<DbContexto>(options =>
-	options.UseNpgsql(builder.Configuration["ConnectionString"])
+	options.UseNpgsql(DotNetEnv.Env.GetString("CONNECTION_STRING"))
 );
 
 builder.Services.AddControllers();
