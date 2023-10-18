@@ -15,7 +15,7 @@ builder.Logging.AddSerilog(logger);
 
 //insira a string connection
 builder.Services.AddDbContext<DbContexto>(options =>
-	options.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STRING"))
+	options.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STRING_MARKETING"))
 );
 
 builder.Services.AddControllers();
@@ -38,11 +38,8 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
