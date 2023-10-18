@@ -13,11 +13,9 @@ var logger = new LoggerConfiguration()
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
-DotNetEnv.Env.Load();
-
 //insira a string connection
 builder.Services.AddDbContext<DbContexto>(options =>
-	options.UseNpgsql(DotNetEnv.Env.GetString("CONNECTION_STRING"))
+	options.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STRING"))
 );
 
 builder.Services.AddControllers();
