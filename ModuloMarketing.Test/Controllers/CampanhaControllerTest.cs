@@ -185,6 +185,134 @@ public class CampanhaControllerTest
 
 
 
+    [Fact]
+    public async Task DesativarCampanha_DeveRetornarOkQuandoCampanhaDesativada()
+    {
+        // Arrange
+        var mockLogger = new Mock<ILogger<CampanhaController>>();
+        var mockCampanhaRepository = new Mock<ICampanhaRepository>();
+        var campanhaId = 1; // ID da campanha a ser desativada
+
+        var controller = new CampanhaController(mockLogger.Object, mockCampanhaRepository.Object);
+
+        // Act
+        var result = await controller.DesativarCampanha(campanhaId);
+
+        // Assert
+        Assert.IsType<OkResult>(result);
+    }
+
+    [Fact]
+    public async Task DesativarCampanha_DeveRetornarBadRequestQuandoModelInvalido()
+    {
+        // Arrange
+        var mockLogger = new Mock<ILogger<CampanhaController>>();
+        var mockCampanhaRepository = new Mock<ICampanhaRepository>();
+        var campanhaId = 1; // ID da campanha a ser desativada
+        var controller = new CampanhaController(mockLogger.Object, mockCampanhaRepository.Object);
+        controller.ModelState.AddModelError("CampoRequerido", "O campo é obrigatório");
+
+        // Act
+        var result = await controller.DesativarCampanha(campanhaId);
+
+        // Assert
+        Assert.IsType<BadRequestObjectResult>(result);
+    }
+
+    [Fact]
+    public async Task DesativarCampanha_DeveRetornarBadRequestQuandoExcecaoOcorre()
+    {
+        // Arrange
+        var mockLogger = new Mock<ILogger<CampanhaController>>();
+        var mockCampanhaRepository = new Mock<ICampanhaRepository>();
+        var campanhaId = 1; // ID da campanha a ser desativada
+        mockCampanhaRepository.Setup(repo => repo.DesativarCampanha(campanhaId))
+            .ThrowsAsync(new Exception("Erro simulado"));
+        var controller = new CampanhaController(mockLogger.Object, mockCampanhaRepository.Object);
+
+        // Act
+        var result = await controller.DesativarCampanha(campanhaId);
+
+        // Assert
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+
+    [Fact]
+    public async Task GetById_DeveRetornarOkComCampanhaPorId()
+    {
+        // Arrange
+        var mockLogger = new Mock<ILogger<CampanhaController>>();
+        var mockCampanhaRepository = new Mock<ICampanhaRepository>();
+        var campanhaId = 1; // ID da campanha a ser buscada
+        var campanhaEncontrada = new Campanha { /* preencha com os dados da campanha encontrada */ };
+
+        mockCampanhaRepository.Setup(repo => repo.GetCampanhaPorId(campanhaId))
+            .ReturnsAsync(campanhaEncontrada);
+        var controller = new CampanhaController(mockLogger.Object, mockCampanhaRepository.Object);
+
+        // Act
+        var result = await controller.GetById(campanhaId);
+
+        // Assert
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var model = Assert.IsType<Campanha>(okResult.Value);
+        Assert.Same(campanhaEncontrada, model);
+    }
+
+    [Fact]
+    public async Task GetById_DeveRetornarNotFoundQuandoCampanhaNaoEncontrada()
+    {
+        // Arrange
+        var mockLogger = new Mock<ILogger<CampanhaController>>();
+        var mockCampanhaRepository = new Mock<ICampanhaRepository>();
+        var campanhaId = 1; // ID da campanha a ser buscada
+        mockCampanhaRepository.SetupSequence(repo => repo.GetCampanhaPorId(It.IsAny<int>()))
+            .Returns(Task.FromResult<Campanha>(null)) // ou o valor apropriado
+            .Returns(Task.FromResult(new Campanha { /* preencha com os dados da campanha */ }));
+        var controller = new CampanhaController(mockLogger.Object, mockCampanhaRepository.Object);
+
+        // Act
+        var result = await controller.GetById(campanhaId);
+
+        // Assert
+        Assert.IsType<NotFoundResult>(result);
+    }
+
+    [Fact]
+    public async Task GetById_DeveRetornarBadRequestQuandoModelInvalido()
+    {
+        // Arrange
+        var mockLogger = new Mock<ILogger<CampanhaController>>();
+        var mockCampanhaRepository = new Mock<ICampanhaRepository>();
+        var campanhaId = 1; // ID da campanha a ser buscada
+        var controller = new CampanhaController(mockLogger.Object, mockCampanhaRepository.Object);
+        controller.ModelState.AddModelError("CampoRequerido", "O campo é obrigatório");
+
+        // Act
+        var result = await controller.GetById(campanhaId);
+
+        // Assert
+        Assert.IsType<BadRequestObjectResult>(result);
+    }
+
+    [Fact]
+    public async Task GetById_DeveRetornarBadRequestQuandoExcecaoOcorre()
+    {
+        // Arrange
+        var mockLogger = new Mock<ILogger<CampanhaController>>();
+        var mockCampanhaRepository = new Mock<ICampanhaRepository>();
+        var campanhaId = 1; // ID da campanha a ser buscada
+        mockCampanhaRepository.Setup(repo => repo.GetCampanhaPorId(campanhaId))
+            .ThrowsAsync(new Exception("Erro simulado"));
+        var controller = new CampanhaController(mockLogger.Object, mockCampanhaRepository.Object);
+
+        // Act
+        var result = await controller.GetById(campanhaId);
+
+        // Assert
+        Assert.IsType<BadRequestResult>(result);
+    }
 
 
 }
