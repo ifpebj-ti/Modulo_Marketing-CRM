@@ -105,12 +105,15 @@ public class CampanhaControllerTest
         var campanhaRequest = new CampanhaRequest
         (
             "Nome da campanha",
+            "Nome do criador",
             "Email do criador",
             "Descrição",
             DateTime.Now,
             DateTime.Now,
+            DateTime.Now,
             "Mensagem",
-            "Observãção"
+            "Observãção",
+            100.0
         );
         var campanhaCriada = new Campanha { /* preencha com os dados da campanha criada */ };
 
@@ -138,12 +141,15 @@ public class CampanhaControllerTest
         var campanhaRequest = new CampanhaRequest
         (
             "Nome da campanha",
+            "Nome do criador",
             "Email do criador",
             "Descrição",
             DateTime.Now,
             DateTime.Now,
+            DateTime.Now,
             "Mensagem",
-            "Observãção"
+            "Observãção",
+            100.0
         );
 
         var controller = new CampanhaController(mockLogger.Object, mockCampanhaRepository.Object);
@@ -162,15 +168,18 @@ public class CampanhaControllerTest
         // Arrange
         var mockLogger = new Mock<ILogger<CampanhaController>>();
         var mockCampanhaRepository = new Mock<ICampanhaRepository>();
-        var campanhaRequest = new CampanhaRequest 
-        ( 
+        var campanhaRequest = new CampanhaRequest
+        (
             "Nome da campanha",
+            "Nome do criador",
             "Email do criador",
             "Descrição",
             DateTime.Now,
             DateTime.Now,
+            DateTime.Now,
             "Mensagem",
-            "Observãção"
+            "Observãção",
+            100.0
         );
         mockCampanhaRepository.Setup(repo => repo.SalvarCampanha(campanhaRequest))
             .ThrowsAsync(new Exception("Erro simulado"));
