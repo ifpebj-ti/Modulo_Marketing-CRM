@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ModuloMarketing.Api.Repository.Implementation
 {
-    public class CampanhaRepository: ICampanhaRepository
+    public class CampanhaRepository : ICampanhaRepository
     {
 
         private readonly DbContexto Contexto;
@@ -21,8 +21,8 @@ namespace ModuloMarketing.Api.Repository.Implementation
 
             List<Campanha> campanhas = await this.Contexto.Campanha
                 .OrderBy(Data_Inicio => Data_Inicio.Data_Inicio)
-                .Skip(skip) 
-                .Take(take) 
+                .Skip(skip)
+                .Take(take)
                 .ToListAsync();
             return campanhas;
         }
@@ -35,8 +35,8 @@ namespace ModuloMarketing.Api.Repository.Implementation
             List<Campanha> campanhasAtivas = await this.Contexto.Campanha
                 .OrderBy(Data_Inicio => Data_Inicio.Data_Inicio)
                 .Where(campanha => campanha.Status == true)
-                .Skip(skip) 
-                .Take(take) 
+                .Skip(skip)
+                .Take(take)
                 .ToListAsync();
             return campanhasAtivas;
 
@@ -48,7 +48,7 @@ namespace ModuloMarketing.Api.Repository.Implementation
 
             return qntdCampanhas;
         }
-        
+
         public async Task<Campanha> GetCampanhaPorId(int id)
         {
             Campanha campanha = await this.Contexto.Campanha.FirstOrDefaultAsync(m => m.Id_Campanha == id);
@@ -62,14 +62,17 @@ namespace ModuloMarketing.Api.Repository.Implementation
             {
                 Nome_Campanha = request.Nome_Campanha,
                 Email_Criador = request.Email_Criador,
+                Nome_Criador = request.Nome_Criador,
                 Descricao = request.Descricao,
                 Data_Inicio = request.Data_Inicio,
                 Status = true,
                 Data_Termino = request.Data_Termino,
+                Data_Criacao = request.Data_Criacao,
                 Possui_Disparo_Mensagem = false,
                 mensagem = request.Mensagem,
                 Alcance = 0,
-                Observacao = request.Observacao
+                Observacao = request.Observacao,
+                Valor_Meta = request.Valor_Meta,
             };
             await Contexto.Campanha.AddAsync(campanha);
             await Contexto.SaveChangesAsync();
@@ -83,7 +86,7 @@ namespace ModuloMarketing.Api.Repository.Implementation
             if (campanha != null)
             {
 
-                campanha.Status = false; 
+                campanha.Status = false;
                 await Contexto.SaveChangesAsync();
             }
             else

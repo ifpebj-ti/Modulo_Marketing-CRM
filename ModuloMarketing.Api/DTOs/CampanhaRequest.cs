@@ -1,11 +1,13 @@
-using ModuloMarketing.Api.Domain;
 
 public record CampanhaRequest(
     string Nome_Campanha,
+    string Nome_Criador,
     string Email_Criador,
     string Descricao,
     DateTime Data_Inicio,
     DateTime Data_Termino,
+    DateTime Data_Criacao,
     string Mensagem,
-    string Observacao
-);
+    string Observacao,
+    double Valor_Meta
+    );
