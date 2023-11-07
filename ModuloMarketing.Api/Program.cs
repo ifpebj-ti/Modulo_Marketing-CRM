@@ -15,7 +15,7 @@ builder.Logging.AddSerilog(logger);
 
 //insira a string connection
 builder.Services.AddDbContext<DbContexto>(options =>
-	options.UseNpgsql("Host=150.136.54.24:5435;Username=postgres;Password=admin;Database=marketingdb")
+	options.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STRING_MARKETING"))
 );
 
 builder.Services.AddControllers();

@@ -1,4 +1,5 @@
 using ModuloMarketing.Api.Domain;
+using ModuloMarketing.Api.Enuns;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -48,9 +49,18 @@ public class Campanha
 
     public double Valor_Meta { get; set; }
 
+    public bool Recorrente { get; set; }
+
+    public FrequenciaRecorrencia Frequencia { get; set; }
+
+    public int Dia_Da_Semana_Da_Recorrencia { get; set; }
+
+    public int Dia_Do_Mes_Da_Recorrencia { get; set; }
+
+    public int Frequencia_de_Repeticao { get; set; }
+
     //public List<ProdutosEmPromocao> Produtos_Em_Promo��o { get; set; }
     //public List<Filiais> Filiais_Da_Campanha { get; set; }
     //public List<Canal> Canais_De_Reproducao { get; set; }
-
 
 }

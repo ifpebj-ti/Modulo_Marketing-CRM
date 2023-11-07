@@ -1,4 +1,6 @@
 
+using ModuloMarketing.Api.Enuns;
+
 public record CampanhaRequest(
     string Nome_Campanha,
     string Nome_Criador,
@@ -9,5 +11,10 @@ public record CampanhaRequest(
     DateTime Data_Criacao,
     string Mensagem,
     string Observacao,
-    double Valor_Meta
-    );
+    double Valor_Meta,
+    bool Recorrente,
+    int Frequencia,
+    int Dia_Da_Semana_Da_Recorrencia,
+    int Dia_Do_Mes_Da_Recorrencia,
+    int Frequencia_de_Repeticao
+);

@@ -113,7 +113,12 @@ public class CampanhaControllerTest
             DateTime.Now,
             "Mensagem",
             "Observãção",
-            100.0
+            100.0,
+            true,
+            0,
+            0,
+            0,
+            0
         );
         var campanhaCriada = new Campanha { /* preencha com os dados da campanha criada */ };
 
@@ -149,7 +154,12 @@ public class CampanhaControllerTest
             DateTime.Now,
             "Mensagem",
             "Observãção",
-            100.0
+            100.0,
+            true,
+            0,
+            0,
+            0,
+            0
         );
 
         var controller = new CampanhaController(mockLogger.Object, mockCampanhaRepository.Object);
@@ -179,7 +189,12 @@ public class CampanhaControllerTest
             DateTime.Now,
             "Mensagem",
             "Observãção",
-            100.0
+            100.0,
+            true,
+            0,
+            0,
+            0,
+            0
         );
         mockCampanhaRepository.Setup(repo => repo.SalvarCampanha(campanhaRequest))
             .ThrowsAsync(new Exception("Erro simulado"));

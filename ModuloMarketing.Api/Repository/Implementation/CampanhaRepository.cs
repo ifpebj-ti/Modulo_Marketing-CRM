@@ -24,6 +24,7 @@ namespace ModuloMarketing.Api.Repository.Implementation
                 .Skip(skip)
                 .Take(take)
                 .ToListAsync();
+
             return campanhas;
         }
 
@@ -38,8 +39,23 @@ namespace ModuloMarketing.Api.Repository.Implementation
                 .Skip(skip)
                 .Take(take)
                 .ToListAsync();
-            return campanhasAtivas;
 
+            return campanhasAtivas;
+        }
+
+        public async Task<List<Campanha>> GetCampanhasRecorrentes(int pageNumber, int itemNumber)
+        {
+            int skip = (pageNumber - 1) * itemNumber;
+            int take = itemNumber;
+
+            List<Campanha> campanhasAtivas = await this.Contexto.Campanha
+                .OrderBy(Data_Inicio => Data_Inicio.Data_Inicio)
+                .Where(campanha => campanha.Recorrente == true)
+                .Skip(skip)
+                .Take(take)
+                .ToListAsync();
+
+            return campanhasAtivas;
         }
 
         public async Task<int> GetQuantidadeCampanhasAtivas()
@@ -73,7 +89,12 @@ namespace ModuloMarketing.Api.Repository.Implementation
                 Alcance = 0,
                 Observacao = request.Observacao,
                 Valor_Meta = request.Valor_Meta,
+                Frequencia = (Enuns.FrequenciaRecorrencia)request.Frequencia,
+                Dia_Da_Semana_Da_Recorrencia = request.Dia_Da_Semana_Da_Recorrencia,
+                Dia_Do_Mes_Da_Recorrencia = request.Dia_Do_Mes_Da_Recorrencia,
+                Frequencia_de_Repeticao = request.Frequencia_de_Repeticao,
             };
+
             await Contexto.Campanha.AddAsync(campanha);
             await Contexto.SaveChangesAsync();
             return campanha;
@@ -95,5 +116,6 @@ namespace ModuloMarketing.Api.Repository.Implementation
             }
         }
 
+        
     }
 }
