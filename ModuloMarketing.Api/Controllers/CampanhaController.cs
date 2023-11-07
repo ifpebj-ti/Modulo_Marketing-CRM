@@ -73,6 +73,24 @@ public class CampanhaController : ControllerBase
         }
 
     }
+
+    [HttpGet]
+    [Route("CampanhasRecorrentes")]
+    public async Task<IActionResult> GetCampanhasRecorrentes([FromQuery] int pageNumber = 1, [FromQuery] int itemNumber = 10)
+    {
+        try
+        {
+            _logger.LogWarning("Buscando campanhas recorrentes");
+            List<Campanha> campanhasRecorrentes = await _campanhaRepository.GetCampanhasRecorrentes(pageNumber, itemNumber);
+            return Ok(campanhasRecorrentes);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex.Message);
+            return BadRequest();
+        }
+    }
+
     [HttpGet]
     [Route("GetQuantidadeCampanhasAtivas")]
     public async Task<IActionResult> GetQntdCampanhasAtivas()
