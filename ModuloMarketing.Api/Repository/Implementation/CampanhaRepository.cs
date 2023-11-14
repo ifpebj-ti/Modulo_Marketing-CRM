@@ -116,6 +116,23 @@ namespace ModuloMarketing.Api.Repository.Implementation
             }
         }
 
-        
+        public async Task AtivarCampanha(int campanhaId)
+        {
+            var campanha = await Contexto.Campanha.FirstOrDefaultAsync(c => c.Id_Campanha == campanhaId);
+
+            if (campanha != null)
+            {
+
+                campanha.Status = true;
+                await Contexto.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception($"Campanha com ID {campanhaId} não encontrada.");
+            }
+        }
+
+
+
     }
 }

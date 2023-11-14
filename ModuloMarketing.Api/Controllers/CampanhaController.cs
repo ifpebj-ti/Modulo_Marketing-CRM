@@ -150,4 +150,25 @@ public class CampanhaController : ControllerBase
 
     }
 
+    [HttpPost]
+    [Route("AtivarCampanha/{id}")]
+    public async Task<IActionResult> AtivarCampanha([FromRoute] int id)
+    {
+
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        _logger.LogWarning(string.Format("Desativando campanha com id {0}", id));
+        try
+        {
+            await _campanhaRepository.AtivarCampanha(id);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex.Message);
+            return BadRequest();
+        }
+
+    }
+
 }

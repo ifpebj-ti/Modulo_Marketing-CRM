@@ -8,6 +8,7 @@
         Task<Campanha> GetCampanhaPorId(int id);
         Task<Campanha> SalvarCampanha(CampanhaRequest request);
         Task DesativarCampanha(int campanhaId);
+        Task AtivarCampanha(int campanhaId);
         Task<List<Campanha>> GetCampanhasRecorrentes(int pageNumber, int itemNumber);
     }
 }
