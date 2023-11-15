@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
+namespace ModuloMarketing.Api.Domain;
 public class ResultadoCampanha
 {
 

@@ -1,5 +1,5 @@
 
-using ModuloMarketing.Api.Enuns;
+namespace ModuloMarketing.Api.DTOs;
 
 public record CampanhaRequest(
     string Nome_Campanha,

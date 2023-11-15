@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ModuloMarketing.Api.Domain;
-using ModuloMarketing.Api.Repository.Implementation;
+using ModuloMarketing.Api.DTOs;
 using ModuloMarketing.Api.Repository.Interfaces;
 
 namespace ModuloMarketing.Api.Controllers;

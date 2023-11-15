@@ -1,4 +1,7 @@
-﻿namespace ModuloMarketing.Api.Repository.Interfaces
+﻿using ModuloMarketing.Api.Domain;
+using ModuloMarketing.Api.DTOs;
+
+namespace ModuloMarketing.Api.Repository.Interfaces
 {
     public interface ICampanhaRepository 
     {

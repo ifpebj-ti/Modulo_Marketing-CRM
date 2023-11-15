@@ -1,5 +1,6 @@
 using ModuloMarketing.Api.Domain;
 
+namespace ModuloMarketing.Api.DTOs;
 public record HistoricoCampanhasRequest(
     
     string Descricao,
