@@ -78,7 +78,7 @@ jobs:
   
   docker-build:
     name: Build Docker image
-    needs: horusec-security
+    needs: sonarqube
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
