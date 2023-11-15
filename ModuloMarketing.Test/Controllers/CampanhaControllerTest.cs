@@ -8,6 +8,7 @@ using ModuloMarketing.Api.Controllers;
 using ModuloMarketing.Api.Domain;
 using ModuloMarketing.Api.Repository.Implementation;
 using ModuloMarketing.Api.Repository.Interfaces;
+using ModuloMarketing.Api.DTOs;
 
 public class CampanhaControllerTest
 {

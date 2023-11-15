@@ -2,6 +2,7 @@ using ModuloMarketing.Api.Repository.Interfaces;
 using ModuloMarketing.Api.Repository;
 using Microsoft.EntityFrameworkCore;
 using ModuloMarketing.Api.Domain;
+using ModuloMarketing.Api.DTOs;
 
 namespace ModuloMarketing.Api.Repository.Implementation
 {

@@ -1,3 +1,4 @@
+using ModuloMarketing.Api.Domain;
 using System.ComponentModel.DataAnnotations;
 
 public class ProdutoTest

@@ -3,6 +3,8 @@ using ModuloMarketing.Api.Enuns;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+namespace ModuloMarketing.Api.Domain;
+
 public class Campanha
 {
 
