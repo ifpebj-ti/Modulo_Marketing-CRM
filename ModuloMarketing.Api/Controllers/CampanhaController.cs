@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ModuloMarketing.Api.Domain;
 using ModuloMarketing.Api.DTOs;
+using ModuloMarketing.Api.Enuns;
 using ModuloMarketing.Api.Repository.Interfaces;
 
 namespace ModuloMarketing.Api.Controllers;
@@ -169,6 +170,46 @@ public class CampanhaController : ControllerBase
             return BadRequest();
         }
 
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateCampanha(int id, [FromBody] CampanhaRequest campanhaRequest)
+    {
+        try
+        {
+            var existingCampanha = await _campanhaRepository.GetCampanhaPorId(id);
+
+            if (existingCampanha == null)
+            {
+                return NotFound();
+            }
+
+            existingCampanha.Nome_Campanha = campanhaRequest.Nome_Campanha;
+            existingCampanha.Nome_Criador = campanhaRequest.Nome_Criador;
+            existingCampanha.Email_Criador = campanhaRequest.Email_Criador;
+            existingCampanha.Descricao = campanhaRequest.Descricao;
+            existingCampanha.Data_Inicio = campanhaRequest.Data_Inicio;
+            existingCampanha.Data_Termino = campanhaRequest.Data_Termino;
+            existingCampanha.Data_Criacao = campanhaRequest.Data_Criacao;
+            existingCampanha.mensagem = campanhaRequest.Mensagem;
+            existingCampanha.Observacao = campanhaRequest.Observacao;
+            existingCampanha.Valor_Meta = campanhaRequest.Valor_Meta;
+            existingCampanha.Recorrente = campanhaRequest.Recorrente;
+            existingCampanha.Frequencia = (FrequenciaRecorrencia)campanhaRequest.Frequencia;
+            existingCampanha.Dia_Da_Semana_Da_Recorrencia = campanhaRequest.Dia_Da_Semana_Da_Recorrencia;
+            existingCampanha.Dia_Do_Mes_Da_Recorrencia = campanhaRequest.Dia_Do_Mes_Da_Recorrencia;
+            existingCampanha.Frequencia_de_Repeticao = campanhaRequest.Frequencia_de_Repeticao;
+
+            // Salve as alterações no banco de dados
+            await _campanhaRepository.UpdateCampanha(existingCampanha);
+
+            return NoContent(); // Resposta 204 No Content indicando sucesso sem conteúdo
+        }
+        catch (Exception ex)
+        {
+            return BadRequest();
+        }
+        
     }
 
 }
