@@ -13,5 +13,6 @@ namespace ModuloMarketing.Api.Repository.Interfaces
         Task DesativarCampanha(int campanhaId);
         Task AtivarCampanha(int campanhaId);
         Task<List<Campanha>> GetCampanhasRecorrentes(int pageNumber, int itemNumber);
+        Task UpdateCampanha(Campanha existingCampanha);
     }
 }

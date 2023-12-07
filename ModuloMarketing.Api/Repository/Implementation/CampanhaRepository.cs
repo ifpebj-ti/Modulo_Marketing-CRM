@@ -134,7 +134,19 @@ namespace ModuloMarketing.Api.Repository.Implementation
             }
         }
 
-
+        public async Task UpdateCampanha(Campanha campanha)
+        {
+            try
+            {
+                Contexto.Entry(campanha).State = EntityState.Modified;
+                await Contexto.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
 
     }
 }

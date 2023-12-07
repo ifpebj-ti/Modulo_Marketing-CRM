@@ -339,5 +339,46 @@ public class CampanhaControllerTest
         Assert.IsType<BadRequestResult>(result);
     }
 
+    [Fact]
+    public async Task UpdateCampanha_Returns_NoContentResult()
+    {
+        // Arrange
+        var mockLogger = new Mock<ILogger<CampanhaController>>();
+        var campanhaRepositoryMock = new Mock<ICampanhaRepository>();
+        var campanhaController = new CampanhaController(mockLogger.Object, campanhaRepositoryMock.Object);
+
+        var existingCampanha = new Campanha
+        {
+            Id_Campanha = 1
+        };
+
+        var campanhaRequest = new CampanhaRequest
+        (
+            "Nome da campanha",
+            "Nome do criador",
+            "Email do criador",
+            "Descrição",
+            DateTime.Now,
+            DateTime.Now,
+            DateTime.Now,
+            "Mensagem",
+            "Observãção",
+            100.0,
+            true,
+            0,
+            0,
+            0,
+            0
+        );
+
+        campanhaRepositoryMock.Setup(repo => repo.GetCampanhaPorId(It.IsAny<int>()))
+                             .ReturnsAsync(existingCampanha);
+
+        // Act
+        var result = await campanhaController.UpdateCampanha(existingCampanha.Id_Campanha, campanhaRequest);
+
+        // Assert
+        Assert.IsType<NoContentResult>(result);
+    }
 
 }
