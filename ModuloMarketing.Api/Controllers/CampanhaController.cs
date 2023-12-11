@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModuloMarketing.Api.Domain;
 using ModuloMarketing.Api.DTOs;
@@ -8,6 +9,7 @@ namespace ModuloMarketing.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class CampanhaController : ControllerBase
 {
 
